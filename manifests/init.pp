@@ -34,23 +34,23 @@ define dotfiles (
       user     => "${title}",
       provider => shell,
       command  => $clobber ? {
-        false => "for f in ${creates}/${dotfiles_dir}/.*; do [ \"\${f##*/}\" != \"..\" ] && [ \"\${f##*/}\" != \".\" ] &&
-                  [ ! -e \${f##*/} ] && 
-                  ln -fs \$f ./ || true;
+        false => "for f in ${creates}/${dotfiles_dir}/.[^.]*; do
+                    [ ! -e \${f##*/} ] && 
+                    ln -s \$f ./ || true;
                   done",
-        true  => "for f in ${creates}/${dotfiles_dir}/.*; do [ -f \$f ] &&
-                  if [ \"`readlink \${f##*/}`\" != \"`echo \$f`\" ]; then
-                   mv \${f##*/} \${f##*/}${bak_ext};
-                   ln -fs \$f ./; 
-                  else
-                    true;
-                  fi;
+        true  => "for f in ${creates}/${dotfiles_dir}/.[^.]*; do
+                    if [ \"`readlink \${f##*/}`\" != \"`echo \$f`\" ]; then
+                     mv \${f##*/} \${f##*/}${bak_ext};
+                     ln -fs \$f ./; 
+                    else
+                      true;
+                    fi;
                   done",
         },
       #command  => "for f in ${creates}/${dotfiles_dir}/.*; do [ -f \$f ] && ln -fs \$f ./ || true; done",
       unless   => $clobber ? {
-        false => "for f in ${creates}/${dotfiles_dir}/.* ; do [ \"\${f##*/}\" == \"..\" ] || [ \"\${f##*/}\" == \".\" ] || [ -e \${f##*/} ] || exit 1; done", ## Each dotfile must merely exist
-        true  => "for f in ${creates}/${dotfiles_dir}/.* ; do [ \"\${f##*/}\" == \"..\" ] || [ \"\${f##*/}\" == \".\" ] || [ \"`readlink \${f##*/}`\" == \"\$f\" ] || exit 1; done", ## Each dotfile must point to the file in the git project
+        false => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ -e \${f##*/} ] || exit 1; done", ## Each dotfile must merely exist
+        true  => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ \"`readlink \${f##*/}`\" == \"\$f\" ] || exit 1; done", ## Each dotfile must point to the file in the git project
       },
       require  => Dotfiles::Pull["${title}"];
   }
