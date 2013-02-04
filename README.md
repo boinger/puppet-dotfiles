@@ -25,6 +25,8 @@ Default values (other than $gituser, which has no default, of course) shown
       dotfiles_dir => "home",
       branch       => "master",
       homedir      => "/home/${name}"
+      clobber      => true,
+      bak_ext      => '.bak',
       single_pull  => false,
       rebase       => true;
   }
@@ -38,6 +40,8 @@ Default values (other than $gituser, which has no default, of course) shown
 (.bashrc, .bash_profile, .zshrc, .nethackrc, etc, etc)
 * branch: If you want to pull a specific branch of your dotfiles project
 * homedir: Your home directory on the puppet-managed host
+* clobber: insert dotfiles, moving any existing conflicts out of the way
+* bak_ext: extension to append to filenames of existing files to get them out of the way.  Only matters if you have $clobber = true.
 * single_pull: Option to pull down the dotfiles one time only (no recurring pulls)
 * rebase: If you prefer `git pull --rebase` to `git pull` (you probably want this)
 
