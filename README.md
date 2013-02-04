@@ -43,7 +43,7 @@ Default values (other than $gituser, which has no default, of course) shown
 * clobber: insert dotfiles, moving any existing conflicts out of the way
 * bak_ext: extension to append to filenames of existing files to get them out of the way.  Only matters if you have $clobber = true.
 * single_pull: Option to pull down the dotfiles one time only (no recurring pulls)
-* rebase: If you prefer `git pull --rebase` to `git pull` (you probably want this)
+* rebase: If you prefer `git pull --rebase` to `git pull` (since your dotfiles are likely being modded by *just you*, you may want this)
 
 ##License##
 
