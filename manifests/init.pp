@@ -29,7 +29,7 @@ define dotfiles (
   }
 
   exec {
-    'link ${title} dotfiles':
+    "link ${title} dotfiles":
       cwd      => "${real_homedir}",
       user     => "${title}",
       provider => shell,
@@ -47,7 +47,6 @@ define dotfiles (
                     fi;
                   done",
         },
-      #command  => "for f in ${creates}/${dotfiles_dir}/.*; do [ -f \$f ] && ln -fs \$f ./ || true; done",
       unless   => $clobber ? {
         false => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ -e \${f##*/} ] || exit 1; done", ## Each dotfile must merely exist
         true  => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ \"`readlink \${f##*/}`\" == \"\$f\" ] || exit 1; done", ## Each dotfile must point to the file in the git project
