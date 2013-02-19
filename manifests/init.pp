@@ -29,7 +29,7 @@ define dotfiles (
   }
 
   exec {
-    'link dotfiles':
+    'link ${title} dotfiles':
       cwd      => "${real_homedir}",
       user     => "${title}",
       provider => shell,
