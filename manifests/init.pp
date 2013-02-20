@@ -19,7 +19,7 @@ define dotfiles (
 
   $creates = "${real_homedir}/${project}"
 
-  dotfiles::pull {$title:
+  dotfiles::clone {$title:
     gituser => $gituser,
     giturl  => $giturl,
     project => $project,
@@ -51,7 +51,7 @@ define dotfiles (
         false => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ -e \${f##*/} ] || exit 1; done", ## Each dotfile must merely exist
         true  => "for f in ${creates}/${dotfiles_dir}/.[^.]* ; do [ \"`readlink \${f##*/}`\" == \"\$f\" ] || exit 1; done", ## Each dotfile must point to the file in the git project
       },
-      require  => Dotfiles::Pull["${title}"];
+      require  => Dotfiles::Clone["${title}"];
   }
 
   dotfiles::update { $title:
@@ -59,7 +59,7 @@ define dotfiles (
     homedir     => $real_homedir,
     cwd         => $creates,
     single_pull => $single_pull,
-    require     => Dotfiles::Pull["${title}"];
+    require     => Dotfiles::Clone["${title}"];
   }
 
 }

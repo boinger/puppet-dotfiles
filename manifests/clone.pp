@@ -1,4 +1,4 @@
-define dotfiles::pull(
+define dotfiles::clone(
     $gituser,
     $giturl  = "git://github.com",
     $project = "dotfiles",
@@ -6,7 +6,7 @@ define dotfiles::pull(
     $homedir,
     $creates,
   ) {
-  exec { "pull ${gituser} dotfiles for ${title}":
+  exec { "clone ${gituser} dotfiles for ${title}":
     cwd     => "${homedir}",
     command => "git clone ${giturl}/${gituser}/${project}.git --branch $branch",
     creates => "${creates}",
