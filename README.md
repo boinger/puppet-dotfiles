@@ -28,7 +28,8 @@ Default values (other than $gituser, which has no default, of course) shown
       clobber      => true,
       bak_ext      => '.bak',
       single_pull  => false,
-      rebase       => true;
+      rebase       => true,
+      frequency    => 30;
   }
 ```
 
@@ -44,6 +45,7 @@ Default values (other than $gituser, which has no default, of course) shown
 * bak_ext: extension to append to filenames of existing files to get them out of the way.  Only matters if you have $clobber = true.
 * single_pull: Option to pull down the dotfiles one time only (no recurring pulls)
 * rebase: If you prefer `git pull --rebase` to `git pull` (since your dotfiles are likely being modded by *just you*, you may want this)
+* frequency: Minimum time between pulls (in minutes)
 
 ##License##
 
